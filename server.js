@@ -2,12 +2,14 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const {sequelize} = require('./models');
-const {stationRouter} = require('./app/routers/station.router.js');
+const {rootRouter} = require('./app/routers/root.router.js');
 app.use(express.json());
 
 const publicPathDirectory = path.join(__dirname, "./app/public");
+
 app.use(express.static(publicPathDirectory));
-app.use(stationRouter);
+
+app.use(rootRouter);
 const port = 3456;
 
 app.listen(port, async () => {
@@ -18,5 +20,6 @@ app.listen(port, async () => {
     } catch (error) {
       console.error("Unable to connect to the database:", error);
     }
+    
   });
   
