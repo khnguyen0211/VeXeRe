@@ -7,7 +7,7 @@ app.use(express.json());
 
 const publicPathDirectory = path.join(__dirname, "./app/public");
 
-app.use(express.static(publicPathDirectory));
+app.use("/app/public", express.static(publicPathDirectory));
 
 app.use(rootRouter);
 const port = 3456;

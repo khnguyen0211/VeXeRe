@@ -1,5 +1,6 @@
 const { create_user, read_detail_user } = require('../services/user.service.js');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const register = async (req, res) => {
     try {
@@ -26,7 +27,8 @@ const login = async (req, res) => {
         if (user) {
             const isAuth = bcrypt.compareSync(password, user.password)
             if (isAuth) {
-                res.send("dang nhap thanh cong");
+                const token = jwt.sign({username: user.username, type: user.type}, "knguyen", {expiresIn: 10 * 60});
+                res.send(token);
             } else {
                 res.send("sai mat khau");
             }
@@ -37,4 +39,12 @@ const login = async (req, res) => {
 
 }
 
-module.exports = { register, login }
+const setAvatar = async (req, res) => {
+    const user = await  read_detail_user(req.user.username);
+    const {file} = req;
+
+    user.avatar = "http://localhost:3456/" + file.path;
+    await user.save()
+    res.send(user.avatar);
+}
+module.exports = { register, login, setAvatar }
