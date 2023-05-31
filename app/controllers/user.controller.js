@@ -1,4 +1,4 @@
-const { create_user, read_detail_user } = require('../services/user.service.js');
+const { create_user, read_detail_user, get_ticket_info } = require('../services/user.service.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -47,4 +47,9 @@ const setAvatar = async (req, res) => {
     await user.save()
     res.send(user.avatar);
 }
-module.exports = { register, login, setAvatar }
+
+const getTicketInfo = async (req, res) => {
+    const ticketInfo = await get_ticket_info();
+    res.send(ticketInfo);
+}
+module.exports = { register, login, setAvatar, getTicketInfo }

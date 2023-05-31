@@ -1,4 +1,4 @@
-const {create_station} = require('../services/station.service.js');
+const {create_station, read_all_station} = require('../services/station.service.js');
 
 const createStation = async (res, req) => {
     try {
@@ -15,4 +15,16 @@ const createStation = async (res, req) => {
     }
 }
 
-module.exports = {createStation}
+const readAllStation = async (req, res) => { 
+    try {
+        const stationList = await read_all_station();
+        if(stationList.length > 0) { 
+            res.send(stationList);
+        } else {
+            res.send("Not found");
+        }
+    } catch (error) {
+        res.send(error);
+    }
+}
+module.exports = {createStation, readAllStation}

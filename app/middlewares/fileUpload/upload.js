@@ -11,6 +11,7 @@ const uploadAvatar = (type) => {
             cb(null, Date.now() + "-" + file.originalname);
         },
     });
+    
     const upload = multer({
         storage: storage, 
         fileFilter: (req, file, cb) => {
